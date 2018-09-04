@@ -1,0 +1,54 @@
+<p id="notice"><%#= notice %></p>
+
+<h1>Parents</h1>
+<div class="row">
+  <div id="sidebar" class="col-xs-2">
+    <%= link_to 'Verified Parents', parents_path(verified: 'true'), class: "btn btn-default" %>
+  </div>
+  <div id="content" class="col-xs-2">
+    <%= link_to 'Un Verified Parents', parents_path(verified: 'false'), class: "btn btn-default" %>
+  </div>
+
+  <div id="content" class="col-xs-3">
+  <%= form_tag parents_path, :method => 'get', :id => "parents_search" do %>
+    <p>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "Search", :name => nil %>
+    </p>
+    <div id="parents"><%= render 'parents' %></div>
+  <% end %>
+  </div>
+</div>
+<%= form_tag verified_parents_path, method: :put do %>
+<table table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Mobile</th>
+      <th>Vefied</th>
+      <th colspan="3"> Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @parents.each do |parent| %>
+      <tr>
+        <td><%= check_box_tag "parent_ids[]", parent.id %></td>
+        <td><%= parent.name %></td>
+        <td><%= parent.email %></td>
+        <td><%= parent.mobile %></td>
+        <td><%= parent.verified %></td>
+        <td><%= link_to 'Show', parent %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="row">
+<%= submit_tag "Verify/Unverify Selected", class: 'btn'%>
+
+<%= link_to 'Create New Parent Account', new_parent_path, class: "btn btn-success" %>
+</div>
+<% end %>
+<br>

@@ -1,0 +1,45 @@
+<%= form_for(food_menu) do |f| %>
+  <% if food_menu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(food_menu.errors.count, "error") %> prohibited this food_menu from being saved:</h2>
+
+      <ul>
+      <% food_menu.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field form-group">
+    <%= f.label :serve_date, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.text_field :serve_date, 'data-behaviour' => 'datepicker' %>
+    </div>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :menu_type, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.text_field :menu_type %>
+    </div>
+  </div>
+
+  <div class="field form-group dropdown">
+    <%= f.label :food, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10 dropdown">
+      <%= f.collection_select :food_id, Food.all, :id, :name, class: "form-control dropdown" %>
+    </div>
+  </div>
+
+  <div class="actions form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit 'Submit', class: "btn btn-success" %>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $('[data-behaviour~=datepicker]').datepicker();
+</script>
